@@ -1,0 +1,15 @@
+.signin_btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.signinbackbtn {
+    float: right;
+    margin-top: -20px;
+    font-size: 15px;
+}
+ .signinbackbtn:hover{
+    transform: scale(1.1);
+ }

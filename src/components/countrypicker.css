@@ -1,0 +1,34 @@
+.country_code {
+  max-width: 200px !important;
+  /* margin: 20px auto; */
+}
+
+.country-picker .react-select__control {
+  display: flex;
+  align-items: center;
+}
+
+.country-picker img {
+  display: inline-block;
+  width: 20px;
+  height: auto;
+  /* margin-right: 10px; */
+}
+
+.country-picker .react-select__single-value {
+  display: flex;
+  align-items: center;
+}
+
+.country-picker .react-select__option {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.css-19bb58m{
+  display: none !important;
+}
+.css-1nmdiq5-menu {
+  overflow-x: hidden !important;
+  /* width: auto !important; */
+}

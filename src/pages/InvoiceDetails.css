@@ -1,0 +1,86 @@
+.table_heading {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #169c1a;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.invoice_container {
+  margin-top: 100px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 80vh !important;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  font-size: 16px;
+  text-align: left;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-table th {
+  background-color: #149619;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.custom-table td {
+  text-align: center;
+  font-size: 18px;
+  border: 2px solid black;
+  
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .custom-table {
+    font-size: 14px;
+  }
+
+  .table-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsiveTable td .tdBefore {
+    left: 0;
+    font-size: 12px;
+    top: 3px;
+    width: 100%;
+  }
+
+  .btn-group {
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .table-btn {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  .invoice_container {
+    margin-top: 145px;
+  }
+}

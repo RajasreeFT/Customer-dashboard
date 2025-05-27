@@ -1,0 +1,27 @@
+/* Centered layout when sidebar is open */
+.dashboard-container.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 320px); /* Adjust this based on sidebar width */
+  margin-left: 320px; /* This should match your sidebar width */
+  height: auto;
+  transition: all 1.3s ease-in-out; /* Smooth transition for layout change */
+}
+
+/* Full-width layout when sidebar is closed */
+.dashboard-container.full-width {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: all 1.3s ease-in-out;
+}
+.dash_cont_main {
+  overflow-y: hidden;
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 768px) {
+  .nav_menu.active {
+    width: 100%;
+  }
+}

@@ -1,0 +1,124 @@
+.phase-selection {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  label {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 30px;
+    font-weight: 600;
+    font-family: "Arial", sans-serif;
+  }
+}
+
+.plot-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+.plot_layout {
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 40px;
+}
+.plot {
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  width: 70px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.plot.available {
+  background-color: green;
+}
+
+.plot.sold {
+  background-color: red;
+}
+.phase-selection {
+  select {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 12px;
+    width: 80%;
+    font-size: 20px;
+    border: 1px solid;
+  }
+}
+.plot_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-direction: column;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 32px;
+
+  width: 55%; 
+  margin: 20px auto; 
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+
+  h4 {
+    font-size: 30px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  }
+  .pg_text {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 0.5;
+  }
+  margin-top: 40px;
+  .check_box {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+  label {
+    font-size: 17px;
+  }
+  .book_now_button {
+    font-size: 20px;
+    width: 30%;
+    padding: 10px;
+    border-radius: 30px;
+  }
+}
+@media screen and (min-device-width: 320px) and (max-device-width: 1024px) {
+  .plot_text {
+    .book_now_button {
+      width: 100%;
+    }
+  }
+  .plot_layout {
+    border-radius: 0px;
+    /* margin: 10px; */
+  }
+
+  .plot_text {
+    border-radius: 0;
+    margin: 20px 0;
+
+    label {
+      font-size: 15px;
+    }
+  }
+  .pg_text {
+    font-size: 16px;
+    line-height: 0.5;
+  }
+}

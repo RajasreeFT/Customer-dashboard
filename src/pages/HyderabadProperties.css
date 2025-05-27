@@ -1,0 +1,117 @@
+.img-fluid {
+  height: 60vh !important;
+}
+
+
+
+/* Styling for the container to center and manage overflow */
+.image-container {
+  overflow: hidden; /* Ensures animation doesn't overflow outside the container */
+  position: relative;
+}
+
+/* Animation for the image */
+.animated-image {
+  animation: floatIn 5s ease-in-out infinite, scaleUp 10s ease-in-out infinite;
+  transform-origin: center; /* Scaling happens from the center */
+}
+
+/* Animation Keyframes */
+@keyframes floatIn {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes scaleUp {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); /* Slightly enlarges the image */
+  }
+}
+
+/* Adding a smooth fade-in effect when the image loads */
+.animated-image {
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.future_heading{
+align-items: start;
+
+}
+
+.future_text_design {
+  font-size: 90px;
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-fill-color: green;
+  -webkit-text-stroke: 1px #fff;
+  font-family: "Times New Roman", Times, serif;
+  /* margin-top: -17px;  */
+  text-align: start;
+
+
+}
+.green_text_design {
+  font-size: 90px;
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-fill-color: green;
+  -webkit-text-stroke: 1px #fff;
+  font-family: "Times New Roman", Times, serif;
+  /* margin-top: -17px;  */
+  text-align: start;
+}
+.hyd_property_text {
+  /* width: 100%; */
+  font-size: 18px;
+  padding: 5px;
+  line-height: 1.5;
+  /* box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.3); */
+  /* margin: 50px; */
+  padding: 15px;
+  /* border-radius: 20px; */
+  color: #fc790d;
+  text-align: justify;
+  /* font-family: 'Roboto', sans-serif; */
+}
+.hyd_container{
+  margin-top: 40px !important;
+}
+@media screen and (min-device-width: 320px) and (max-device-width: 768px) {
+  .future_text_design {
+    font-size: 47px;
+    text-align: start;
+  }
+  .green_text_design {
+    font-size: 50px;
+    text-align: start !important;
+  }
+  .hyd_container {
+    margin-top: 15px !important;
+  }
+
+  .hyd_property_text {
+   
+   
+    box-shadow: none;
+   
+    padding: 10px;
+    border-radius: 20px;
+    
+}
+}

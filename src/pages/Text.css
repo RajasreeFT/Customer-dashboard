@@ -1,0 +1,38 @@
+.text-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.future-text {
+  font-size: 48px;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: -17px;
+  
+
+}
+
+.green-text {
+  color: #28a745; 
+  font-style: italic; 
+  text-shadow: 3px 3px 5px rgba(0, 128, 0, 0.5); 
+  font-family: "Times New Roman", serif; 
+
+  /* font-weight: 900;
+  color: #fff;
+  -webkit-text-fill-color: green;
+  -webkit-text-stroke: 1px #fff;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 70px; */
+
+}
+@media screen and (min-device-width: 320px) and (max-device-width: 1024px) {
+  .future-text {
+    font-size: 43px !important;
+  }
+  .green-text{
+    font-size: 30px !important;
+  }
+}

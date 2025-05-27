@@ -1,0 +1,45 @@
+.cancel_form {
+  margin: 130px 0 40px 0;
+}
+
+.cancel_form_body {
+  text-align: start !important;
+  margin-top: 10px;
+  font-size: 20px;
+  /* label {
+    margin-bottom: 10px;
+  } */
+  input,
+  select {
+    border: 2px solid green;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  input:focus {
+    color: green !important;
+  }
+  select {
+    font-size: 18px;
+  }
+}
+.cancel_sub_btn {
+  background-color: #fc790d !important;
+  /* padding: !important; */
+}
+
+.card-body,
+.card {
+  background-color: whitesmoke;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+
+.cancel_form_card {
+  border-radius: 20px !important;
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 768px) {
+  .cancel_form {
+    margin:110px 0 20px 0 !important;
+  }
+}

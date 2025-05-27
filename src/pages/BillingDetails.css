@@ -1,0 +1,111 @@
+/* .equal-column-table th {
+    width: 50%;
+  }
+  .equal-column-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+   */
+.billing_con {
+  margin-top: 110px;
+  margin-bottom: 20px;
+}
+
+.table td:hover {
+  background-color: #f8f9fa; /* Light background on hover */
+}
+
+.table_heading {
+  font-weight: bold;
+  color: #169c1a;
+  text-transform: uppercase;
+  /* letter-spacing: 3px; */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Header Styling */
+.table th {
+  background-color: #149619 !important;
+  color: white !important;
+  text-align: center;
+  padding: 12px;
+  font-size: 20px;
+  border: 2px solid black !important;
+  font-weight: bold;
+}
+
+/* Table Cell Styling */
+.table td {
+  padding: 12px; /* Add padding for better readability */
+  text-align: center; /* Center-align text */
+  vertical-align: middle; /* Vertically align text to the middle */
+  border: 2px solid black !important;
+}
+.table-paymentdone-btn {
+  background-color: #4c8d30 !important;
+  color: white !important ;
+  font-size: 12px !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  /* border: none !important; */
+}
+
+.responsiveTable td.pivoted :nth-child() {
+  color: green !important;
+}
+/* Table Row Hover Effect */
+.table tbody tr:hover {
+  background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+/* Optional: Add border radius for smoother corners */
+.table {
+  overflow: hidden;
+  /* border: 2px solid black !important; */
+}
+
+.modal-overlay {
+  position: fixed; /* Fixed to keep it centered on the viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1050; /* Ensure it's above all other content */
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Horizontal center */
+  align-items: center; /* Vertical center */
+  overflow: hidden;
+}
+
+.photo-content {
+  max-width: 500px; /* Set a max-width for the modal */
+  width: 90%; /* Responsive width for smaller screens */
+  text-align: center;
+}
+
+.model_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (min-device-width: 320px) and (max-device-width: 1024px) {
+  .billing_details_table_cont {
+    padding: 0 20px;
+
+    .billing_details_table {
+      border-radius: 13px;
+    }
+  }
+
+  .table th {
+    background-color: white !important;
+    color: black !important;
+ 
+  }
+  .table th{
+    border-radius: 13px !important;
+  }
+}

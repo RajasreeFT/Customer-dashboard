@@ -1,0 +1,56 @@
+.table-view-btn {
+  background-color: #1364a2 !important;
+  color: white !important ;
+  font-size: 16px;
+  text-decoration: none !important;
+  cursor: pointer;
+  border-radius: 30px !important;
+  padding: 5px 10px !important;
+}
+
+.table_done_btn {
+  background-color: #fc790d !important;
+  border-radius: 30px !important;
+  padding: 5px 10px !important;
+}
+
+.pay_now {
+  color: black !important;
+  background-color: #0fc005 !important;
+  border-radius: 30px !important;
+  padding: 5px 20px !important;
+  color: white !important;
+  border: none !important;
+}
+.pay_now:hover {
+  background-color: rgb(5, 81, 15) !important;
+}
+
+.bill-modal {
+  width: 500px;
+  margin-top: 50px;
+  margin-left: 20px;
+}
+
+.emi-status {
+  font-weight: bold;
+ 
+ 
+  text-align: center;
+  min-width: 110px; /* Adjust width as needed */
+}
+
+.status-text {
+  border: 3px solid orange !important;
+  border: 1px solid;
+  padding:3px 10px;
+  border-radius: 40px;
+  display: inline-block;
+}
+.paid {
+  color: green;
+}
+
+.not-paid {
+  color: red;
+}
