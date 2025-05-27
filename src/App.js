@@ -32,7 +32,7 @@ function App() {
               <Route path="/SignInForm" element={<UserLogin />} />
               <Route path="/otp_verification" element={<OTPVerification />} />
             </>
-          ):(<>
+          ):(<></>)}
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard_1 />} />
             <Route
@@ -55,9 +55,12 @@ function App() {
             <Route path="/cancellation_process"element={<CancellationProcess />}  />
             <Route path="/customer_quires"element={<Customerqueries />}  />
           </Route>
-          </>)}
+          
 
-          <Route path="*" element={<Navigate to="/SignInForm" />} />
+          <Route
+            path="*"
+            element={<Navigate to={token ? "/dashboard" : "/SignInForm"} />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
