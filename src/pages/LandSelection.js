@@ -8,6 +8,7 @@ import Futuregreencitybrochure from "./Futuregreencitybrochure";
 import PlotLayout from "./PlotLayout";
 import TermsandConditions from "./TermsandConditions";
 
+
 const LandSelection = () => {
   const [selectedLand, setSelectedLand] = useState("");
   const [amountDetails, setAmountDetails] = useState(null);
@@ -17,7 +18,6 @@ const LandSelection = () => {
   // const [showPlotDetails, setShowPlotDetails] = useState(false);
   const [applicationFeePaid, setApplicationFeePaid] = useState({});
   const [areas, setAreas] = useState([]);
-  const [showEditInput, setShowEditInput] = useState(false);
   const [otherAmount, setOtherAmount] = useState("");
   const [customerId, setCustomerId] = useState(null);
   const [isthirtypercentpaid, setIsThirtyPercentPaid] = useState(false);
@@ -96,7 +96,6 @@ const LandSelection = () => {
         setIsThirtyPercentPaid(response.data.eligibleForPlot);
       }
     } catch (error) {
-      console.error("Error fetching last payment:", error);
       setLastPaymentAmount(0);
     }
   };
@@ -149,6 +148,7 @@ const LandSelection = () => {
     if (storedCustomer) {
       const customerData = JSON.parse(storedCustomer);
       setCustomerId(customerData?.customerId || null);
+      console.log("Customer ID:", customerData);
     } else {
       console.error("Customer data not found in localStorage.");
     }
@@ -202,7 +202,6 @@ const LandSelection = () => {
     setSelectedPaymentOption(option);
   };
 
-  
   const handlePayment = async () => {
     const selectedArea = areas.find((area) => area.area === selectedLand);
     const areaId = selectedArea ? selectedArea.id : null;
@@ -232,12 +231,12 @@ const LandSelection = () => {
     }
 
     setIsLoading(true);
-    console.log(paymentAmount, areaId, customerId)
+    console.log(paymentAmount, areaId, customerId);
 
     try {
       const response = await fetch(
         `${API_BASE_URL}/customer/customer-payements?customerId=${customerId}&areaId=${areaId}&amount=${paymentAmount}`,
-        
+
         {
           method: "POST",
           headers: {
@@ -248,56 +247,55 @@ const LandSelection = () => {
       );
 
       const data = await response.json();
-            
-            if (!response.ok) {
-              throw new Error(data?.message || "Payment initiation failed");
-            }
-        
-            if (!data.redirectUrl) {
-              throw new Error("Payment gateway URL not received");
-            }
-        
-            // Close the loading dialog
-            Swal.close();
-        
-            // Extract parameters from redirect URL
-            const url = new URL(data.redirectUrl);
-            const reqData = url.searchParams.get("reqData");
-            const merchantId = url.searchParams.get("merchantId");
-            const actionUrl = url.origin + url.pathname;
-        
-            if (!reqData || !merchantId) {
-              throw new Error("Required payment parameters missing");
-            }
-        
-            // Create and submit payment form
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = actionUrl;
-            form.style.display = 'none';
-        
-            const reqDataInput = document.createElement('input');
-            reqDataInput.type = 'hidden';
-            reqDataInput.name = 'reqData';
-            reqDataInput.value = reqData;
-            form.appendChild(reqDataInput);
-        
-            const merchantIdInput = document.createElement('input');
-            merchantIdInput.type = 'hidden';
-            merchantIdInput.name = 'merchantId';
-            merchantIdInput.value = merchantId;
-            form.appendChild(merchantIdInput);
-        
-            document.body.appendChild(form);
-            form.submit();
-      
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Payment initiation failed");
+      }
+
+      if (!data.redirectUrl) {
+        throw new Error("Payment gateway URL not received");
+      }
+
+      // Close the loading dialog
+      Swal.close();
+
+      // Extract parameters from redirect URL
+      const url = new URL(data.redirectUrl);
+      const reqData = url.searchParams.get("reqData");
+      const merchantId = url.searchParams.get("merchantId");
+      const actionUrl = url.origin + url.pathname;
+
+      if (!reqData || !merchantId) {
+        throw new Error("Required payment parameters missing");
+      }
+
+      // Create and submit payment form
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = actionUrl;
+      form.style.display = "none";
+
+      const reqDataInput = document.createElement("input");
+      reqDataInput.type = "hidden";
+      reqDataInput.name = "reqData";
+      reqDataInput.value = reqData;
+      form.appendChild(reqDataInput);
+
+      const merchantIdInput = document.createElement("input");
+      merchantIdInput.type = "hidden";
+      merchantIdInput.name = "merchantId";
+      merchantIdInput.value = merchantId;
+      form.appendChild(merchantIdInput);
+
+      document.body.appendChild(form);
+      form.submit();
     } catch (error) {
       Swal.fire({
-              icon: 'error',
-              title: 'Payment Failed',
-              text: error.message || 'Something went wrong. Please try again.',
-              footer: '<a href="/contact">Need help?</a>'
-            });
+        icon: "error",
+        title: "Payment Failed",
+        text: error.message || "Something went wrong. Please try again.",
+        footer: '<a href="/contact">Need help?</a>',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -357,54 +355,52 @@ const LandSelection = () => {
                 <div className="amount_details card">
                   <h4 className="terms_pay_cont">Payment Options</h4>
 
-                  {["thirtyPercent", "otherAmount", "full"].map(
-                    (option) => (
-                      <div key={option} className="amount_selection">
-                        <label>
-                          <input
-                            type="radio"
-                            name="paymentOption"
-                            value={option}
-                            checked={selectedPaymentOption === option}
-                            onChange={() => handlePaymentOptionChange(option)}
-                            disabled={
-                              remainingAmounts[option] === 0 ||
-                              (option === "full" &&
-                                remainingAmounts.full === 0) ||
-                              (option === "otherAmount" &&
-                                remainingAmounts.thirtyPercent === 0)
-                            }
-                            className="radio-button"
-                          />
-                          Pay
-                          {option === "min"
-                            ? " Minimum Amount"
-                            : option === "thirtyPercent"
-                            ? " 30% Amount"
-                            : option === "otherAmount"
-                            ? " Other Amount"
-                            : " Full Amount"}
-                          ₹
-                          {option === "thirtyPercent" && otherAmount > 0
-                            ? remainingAmounts.thirtyPercent - otherAmount
-                            : remainingAmounts[option]}
-                        </label>
+                  {["thirtyPercent", "otherAmount", "full"].map((option) => (
+                    <div key={option} className="amount_selection">
+                      <label>
+                        <input
+                          type="radio"
+                          name="paymentOption"
+                          value={option}
+                          checked={selectedPaymentOption === option}
+                          onChange={() => handlePaymentOptionChange(option)}
+                          disabled={
+                            remainingAmounts[option] === 0 ||
+                            (option === "full" &&
+                              remainingAmounts.full === 0) ||
+                            (option === "otherAmount" &&
+                              remainingAmounts.thirtyPercent === 0)
+                          }
+                          className="radio-button"
+                        />
+                        Pay
+                        {option === "min"
+                          ? " Minimum Amount"
+                          : option === "thirtyPercent"
+                          ? " 30% Amount"
+                          : option === "otherAmount"
+                          ? " Other Amount"
+                          : " Full Amount"}
+                        ₹
+                        {option === "thirtyPercent" && otherAmount > 0
+                          ? remainingAmounts.thirtyPercent - otherAmount
+                          : remainingAmounts[option]}
+                      </label>
 
-                        {option === "otherAmount" && (
-                          <div>
-                            <input
-                              type="number"
-                              value={otherAmount}
-                              placeholder="Enter Other Amount"
-                              className="otheramount_field"
-                              onChange={(e) => handleotheramount(e)}
-                              disabled={selectedPaymentOption !== "otherAmount"}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )
-                  )}
+                      {option === "otherAmount" && (
+                        <div>
+                          <input
+                            type="number"
+                            value={otherAmount}
+                            placeholder="Enter Other Amount"
+                            className="otheramount_field"
+                            onChange={(e) => handleotheramount(e)}
+                            disabled={selectedPaymentOption !== "otherAmount"}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
 
                   <div className="amount-paid-container">
                     <h3 className="amount-paid-title">
@@ -468,14 +464,33 @@ const LandSelection = () => {
                             : 0
                         }`}
                   </button>
-                  {isGatewayActive?(<>
-                 
-                  </>):(<>
-                   <div className="bg-primary mt-3" style={{width: "70%", textAlign:"center", borderRadius:"20px"}}>
-                    <p style={{color:"red"}}>Payment gateway is facing some issue please Opt in for manual payment</p>
-                  </div>
-                  </>)}
-                  <button className="pay_now_btn mt-3"><a href="/manual-payment" style={{textDecoration:"none", color:"white"}}>Manual Payment</a></button>
+                  {isGatewayActive ? (
+                    <></>
+                  ) : (
+                    <>
+                      <div
+                        className="bg-primary mt-3"
+                        style={{
+                          width: "70%",
+                          textAlign: "center",
+                          borderRadius: "20px",
+                        }}
+                      >
+                        <p style={{ color: "red" }}>
+                          Payment gateway is facing some issue please Opt in for
+                          manual payment
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  <button className="pay_now_btn mt-3">
+                    <a
+                      href="/manual-payment"
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      Manual Payment
+                    </a>
+                  </button>
                 </div>
               )}
             </div>

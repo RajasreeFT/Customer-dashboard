@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../components/Api";
+import Swal from "sweetalert2";
 
 export default function SignUpForm({ onSignUpSuccess }) {
   const [formData, setFormData] = useState({
@@ -21,12 +22,30 @@ export default function SignUpForm({ onSignUpSuccess }) {
     nomineeName: "",
     occupation: "",
     employeeId: "",
+    employeeReferenceId: "", // <-- Add this line
   });
 
   const [profileImage, setProfileImage] = useState(null);
   const [response, setResponse] = useState("");
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [allEmployees, setAllEmployees] = useState([]);
+  const [showEmployeeModal, setShowEmployeeModal] = useState(false);
+
+  // Fetch all employees for selection
+  useEffect(() => {
+    const fetchAllEmployees = async () => {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/main/admin/list-employee`
+        );
+        setAllEmployees(response.data);
+      } catch (error) {
+        toast.error("Failed to fetch employees");
+      }
+    };
+    fetchAllEmployees();
+  }, []);
 
   // Validation functions
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -42,29 +61,31 @@ export default function SignUpForm({ onSignUpSuccess }) {
     if (!validateEmail(formData.email)) {
       newErrors.email = "Invalid email format";
     }
-
     // Validate mobile number
     if (!validateMobileNumber(formData.mobileNumber)) {
       newErrors.mobileNumber = "Mobile number must be 10 digits";
     }
-
     // Validate PAN number
     if (!validatePanNumber(formData.panNumber)) {
       newErrors.panNumber = "Invalid PAN number format";
     }
-
     // Validate Aadhar number
     if (!validateAadharNumber(formData.aadharNumber)) {
       newErrors.aadharNumber = "Aadhar number must be 12 digits";
     }
 
-    // If there are errors, set them and stop submission
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        html: Object.values(newErrors)
+          .map((msg) => `<div>${msg}</div>`)
+          .join(""),
+      });
       return;
     }
 
-    // Proceed with form submission if no errors
     const form = new FormData();
     Object.keys(formData).forEach((key) => {
       form.append(key, formData[key]);
@@ -84,16 +105,36 @@ export default function SignUpForm({ onSignUpSuccess }) {
         }
       );
       setResponse(response.data);
-      toast.success("Customer registered successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: response.data,
+      });
       onSignUpSuccess();
     } catch (error) {
-      setResponse(error.response ? error.response.data : "An error occurred");
-      toast.error(
-        error.response
+      const msg =
+        error.response && error.response.data
           ? error.response.data
-          : "Registration failed. Please try again."
-      );
-      console.log(error.response);
+          : "Registration failed. Please try again.";
+
+      setResponse(msg);
+
+      // Optionally, map backend messages to field errors
+      if (msg.includes("Aadhar already exists")) {
+        setErrors((prev) => ({ ...prev, aadharNumber: msg }));
+      } else if (msg.includes("Mobile number already exists")) {
+        setErrors((prev) => ({ ...prev, mobileNumber: msg }));
+      } else if (msg.includes("Email already exists")) {
+        setErrors((prev) => ({ ...prev, email: msg }));
+      } else if (msg.includes("Employee not found")) {
+        setErrors((prev) => ({ ...prev, employeeReferenceId: msg }));
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: msg,
+      });
     }
   };
 
@@ -104,6 +145,16 @@ export default function SignUpForm({ onSignUpSuccess }) {
       [name]: type === "file" ? files[0] : value,
     });
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear error when re-typing
+  };
+
+  // Add this function to handle employee selection
+  const handleEmployeeSelect = (employeeId, employeeReferenceId) => {
+    setFormData({
+      ...formData,
+      employeeId: employeeReferenceId, // <-- Send referenceId as employeeId
+      employeeReferenceId,
+    });
+    setShowEmployeeModal(false);
   };
 
   return (
@@ -342,15 +393,92 @@ export default function SignUpForm({ onSignUpSuccess }) {
         {/* Employee Ref Id */}
         <div className="mb-1">
           <label className="form-label">Employee Ref Id</label>
-          <input
-            type="text"
-            name="employeeId"
-            value={formData.employeeId}
-            onChange={handleChange}
-            className="form-control"
-            style={{ width: "100%", border: "1px solid gray" }}
-          />
+          <div style={{ display: "flex", gap: "10px" }}>
+            <input
+              type="text"
+              name="employeeReferenceId"
+              value={formData.employeeReferenceId}
+              className={`form-control ${errors.employeeReferenceId ? "is-invalid" : ""}`}
+              style={{ width: "100%", border: "1px solid gray" }}
+              readOnly
+              onClick={() => setShowEmployeeModal(true)}
+              placeholder="Click to select employee"
+            />
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setShowEmployeeModal(true)}
+            >
+              Select
+            </button>
+          </div>
+          {errors.employeeReferenceId && (
+            <div className="invalid-feedback">{errors.employeeReferenceId}</div>
+          )}
         </div>
+
+        {/* Employee Modal */}
+        {showEmployeeModal && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 9999,
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                padding: "20px",
+                borderRadius: "8px",
+                maxHeight: "80vh",
+                overflowY: "auto",
+                minWidth: "350px",
+              }}
+            >
+              <h5>Select Employee</h5>
+              <button
+                style={{ float: "right", marginBottom: "10px" }}
+                onClick={() => setShowEmployeeModal(false)}
+                className="btn btn-sm btn-danger"
+              >
+                Close
+              </button>
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>Name</th>
+                    <th>Select</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allEmployees.map((emp) => (
+                    <tr key={emp.employeeReferenceId}>
+                      <td>{emp.employeeReferenceId}</td>
+                      <td>{emp.fullName}</td>
+                      <td>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleEmployeeSelect(emp.employeeId, emp.employeeReferenceId)}
+                        >
+                          Choose
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
         {/* Submit Button */}
         <div style={{ display: "flex", justifyContent: "center" }}>

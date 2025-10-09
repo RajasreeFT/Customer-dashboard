@@ -1,22 +1,19 @@
-import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import AvailableProperties from "./pages/AvailableProperties";
-import HyderabadProperties from "./pages/HyderabadProperties";
-import BillingDetails from "./pages/BillingDetails";
-import Paymentreceipt from "./pages/Paymentreceipt";
-import MyProperties from "./pages/MyProperties";
-import CancellationProcess from "./pages/CancellationProcess";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "aos/dist/aos.css";
-import SignUpForm from "./pages/SignUpForm";
-import UserLogin from "./pages/UserLogin";
-import OTPVerification from "./pages/OtpVerification";
-import Dashboard_1 from "./pages/Dashboard_1";
-import ProtectedRoute from "./components/ProtectedRoute";
-import SaiKeshavaProperties from "./pages/SaiKeshavaProperties";
-import Customerqueries from "./pages/Customerqueries";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ManualPaymentPage from "./components/ManualPaymentPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AvailableProperties from "./pages/AvailableProperties";
+import BillingDetails from "./pages/BillingDetails";
+import CancellationProcess from "./pages/CancellationProcess";
+import Customerqueries from "./pages/Customerqueries";
+import Dashboard_1 from "./pages/Dashboard_1";
+import HyderabadProperties from "./pages/HyderabadProperties";
+import MyProperties from "./pages/MyProperties";
+import OTPVerification from "./pages/OtpVerification";
+import Paymentreceipt from "./pages/Paymentreceipt";
+import SaiKeshavaProperties from "./pages/SaiKeshavaProperties";
+import UserLogin from "./pages/UserLogin";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("loggedIn");

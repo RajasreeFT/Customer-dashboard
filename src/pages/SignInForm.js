@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import loadingAnimation from "../loading.json";
+import { API_BASE_URL } from "../components/Api";
 
 function SignInForm({ onOTPRequest }) {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -24,7 +25,7 @@ function SignInForm({ onOTPRequest }) {
 
     try {
       const response = await axios.post(
-        `https://backend.rajasreetownships.in/customer/login?mobileNumber=${mobileNumber}`
+        `${API_BASE_URL}/customer/login?mobileNumber=${mobileNumber}`
       );
       toast.success("OTP sent successfully!");
       onOTPRequest(mobileNumber);

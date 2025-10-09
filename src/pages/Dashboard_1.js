@@ -40,7 +40,7 @@ function Dashboard_1() {
           <FaBars onClick={handleSidebar} fontSize="30px" />
         </Link>
         <div className="navbar_heading">
-          <p>RAjASREE TOWNSHiPS</p>
+          <p>RAJASREE TOWNSHIPS</p>
         </div>
         <div>
           <UserProfile />

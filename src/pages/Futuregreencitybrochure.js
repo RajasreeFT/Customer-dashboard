@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+import React, { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
 import "../pages/greencitybrochure.css";
-import { pdfjs } from 'react-pdf';
-
+import pdf from "../images/future_green.pdf"; // ✅ Local PDF import
 
 // Set up PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js`;
-
 
 const Futuregreencitybrochure = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // PDF file path - adjust this to your actual file location
-  const pdfFile = 'green city.pdf';
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setIsLoading(false);
@@ -26,16 +21,16 @@ const Futuregreencitybrochure = () => {
 
   const onDocumentLoadError = (error) => {
     setIsLoading(false);
-    // setError('Failed to load the brochure. Please try again later.');
-    // console.error('PDF load error:', error);
+    setError("Failed to load the brochure. Please try again later.");
+    console.error("PDF load error:", error);
   };
 
   const goToPrevPage = () => {
-    setPageNumber(prev => Math.max(prev - 1, 1));
+    setPageNumber((prev) => Math.max(prev - 1, 1));
   };
 
   const goToNextPage = () => {
-    setPageNumber(prev => Math.min(prev + 1, numPages));
+    setPageNumber((prev) => Math.min(prev + 1, numPages));
   };
 
   return (
@@ -47,11 +42,14 @@ const Futuregreencitybrochure = () => {
       {error && (
         <div className="error-message">
           <p>{error}</p>
-          {/* <a href={pdfFile} target="_blank" rel="noopener noreferrer" className="view-button"> */}
-          <a href="https://ibb.co/tMq3CFLz" class="btn btn-success" type="button" target="_blank">View Brochure</a>
-
-            {/* View Brochure */}
-          {/* </a> */}
+          <a
+            href={pdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-success"
+          >
+            View Brochure
+          </a>
         </div>
       )}
 
@@ -62,21 +60,21 @@ const Futuregreencitybrochure = () => {
         </div>
       )}
 
-      <div className={`pdf-viewer ${isLoading || error ? 'hidden' : ''}`}>
+      <div className={`pdf-viewer ${isLoading || error ? "hidden" : ""}`}>
         <div className="pdf-controls">
-          <button 
+          <button
             onClick={goToPrevPage}
             disabled={pageNumber <= 1}
             className="nav-button"
           >
             &larr; Previous
           </button>
-          
+
           <span className="page-info">
             Page {pageNumber} of {numPages}
           </span>
-          
-          <button 
+
+          <button
             onClick={goToNextPage}
             disabled={pageNumber >= numPages}
             className="nav-button"
@@ -84,20 +82,20 @@ const Futuregreencitybrochure = () => {
             Next &rarr;
           </button>
         </div>
-        
+
         <div className="pdf-document-container">
           <Document
-            file={pdfFile}
+            file="http://localhost:3000/static/media/future_green.4b0c5f8f93e8017a3b3b.pdf" // ✅ served from public/
             onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={onDocumentLoadError}
-            loading={<div className="document-loading">Loading document...</div>}
+            onLoadError={(error) => {
+              console.error("PDF load error:", error); // 👀 log actual reason
+              setError("Failed to load the brochure. Please try again later.");
+              setIsLoading(false);
+            }}
           >
-            <Page 
-              pageNumber={pageNumber} 
+            <Page
+              pageNumber={pageNumber}
               width={window.innerWidth > 768 ? 800 : 300}
-              renderTextLayer={true}
-              renderAnnotationLayer={true}
-              loading={<div className="page-loading">Loading page...</div>}
             />
           </Document>
         </div>
