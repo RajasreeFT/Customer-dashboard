@@ -1,7 +1,6 @@
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
-import { AiOutlineClose } from "react-icons/ai";
 import { Sidebar } from "../components/Sidebar";
 import Dashboard from "../components/Dashboard";
 import { useEffect, useState } from "react";

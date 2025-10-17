@@ -382,15 +382,17 @@ const BillingDetails = () => {
                     <Th>IFSC Code</Th>
                     <Th>Account Name</Th>
                     <Th>Branch Name</Th>
+                    <Th>UPI ID</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   <Tr>
                     <Td>1</Td>
-                    <Td>147852369</Td>
-                    <Td>HDF00001</Td>
-                    <Td>Rajasree Townships</Td>
-                    <Td>Vijayawada</Td>
+                    <Td>50200009660286</Td>
+                    <Td>HDFC0002413</Td>
+                    <Td>RAJASREE TOWNSHIPS</Td>
+                    <Td>Krishna Nagar, Vijayawada</Td>
+                    <Td>vyapar.172720837789@hdfcbank</Td>
                   </Tr>
                 </Tbody>
               </Table>
